@@ -1,0 +1,102 @@
+{extend name="public/layerout"}
+{block name="header"}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Author" contect="http://www.webqin.net">
+    <title>zbest商城登录</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/response.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      <style>
+
+     #lrBox div{
+         padding-bottom: 21px;
+     }
+     .validate-error{
+         position: absolute;
+
+         color: #ff6600;
+     }
+      </style>
+      {/block}
+
+        {block name="main"}
+<header>
+      <a href="javascript:history.back(-1)" class="back-off fl"><span class="glyphicon glyphicon-menu-left"></span></a>
+      <div class="head-mid">
+       <h1>会员注册</h1>
+      </div>
+     </header>
+     <div class="head-top">
+      <img src="/static/images/head.jpg" />
+     </div><!--head-top/-->
+
+
+
+     <form action="" method="post" class="reg-login">
+            {:token()}
+      <h3>还没有三级分销账号？点此<a class="orange" href="{:url('register')}">注册</a></h3>
+
+         <div class="lrBox">
+
+       <div class="lrList">
+           <input name="username" type="text" placeholder="输入账号"/>
+           <div class="validate-error username"></div>
+       </div>
+       <div class="lrList">
+           <input name="password" type="password" placeholder="输入密码"/>
+           <div class="validate-error password"></div>
+       </div>
+          <div class="lrList">
+              <input name="captcha" type="text" placeholder="输入验证码" style="width:50%;margin-right: 20px"/><img src="{:url('captcha')}" alt="" onclick="this.src = '{:url(\'captcha\')}?id='+Math.random()">
+              <div class="validate-error captcha"></div>
+          </div>
+
+      </div><!--lrBox/-->
+      <div class="lrSub">
+         <p style="text-align: center"><button id="dl" style="padding:10px 150px;background-color:#ffb452">立即登录</button></p>
+          <!--       <input type="submit" id="dl" value="立即登录" />-->
+      </div>
+     </form><!--reg-login/-->
+
+{/block}
+
+{block name="script"}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/static/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/style.js"></script>
+    <script>
+        $('#dl').click(function () {
+
+            $.post('',$('form').serialize(),function (data) {
+                $('.validate-error').empty();
+                $("input[name='__token__']").val(data.token);
+                if (data.status === 'ok')
+                {
+
+                }else if (data.status === 'error')
+                {
+                    console.log(data.errors)
+                    for (index in data.errors)
+                    {
+                        $('.'+index).html(data.errors[index])
+                    }
+                }
+            });
+            return false;
+        })
+
+    </script>
+      {/block}

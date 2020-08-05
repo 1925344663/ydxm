@@ -1,0 +1,65 @@
+{extend name="public/layerout"/}
+
+{block name="header"}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Author" contect="http://www.webqin.net">
+    <title>所有商品</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/response.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+{/block}
+{block name="main"}
+
+    <header>
+        <a href="javascript:history.back(-1)" class="back-off fl"><span class="glyphicon glyphicon-menu-left"></span></a>
+        <div class="head-mid">
+            <form action="#" method="get" class="prosearch"><input type="text" /></form>
+        </div>
+    </header>
+    <ul class="pro-select">
+        <li class="pro-selCur"><a href="javascript:;">新品</a></li>
+        <li><a href="javascript:;">销量</a></li>
+        <li><a href="javascript:;">价格</a></li>
+    </ul>
+
+    <div class="prolist">
+{volist name="goods" id="v" empty="暂时没有数据"}
+        <dl>
+            <dt><a href="{:url('proinfo')}?id={$v.id}"><img src="__IMGURL__/{$v.img_dir}{$v.image}" width="100" height="100" /></a></dt>
+            <dd>
+                <h3><a href="{:url('proinfo')}?id={$v.id}">{$v.goods_name}</a></h3>
+                <div class="prolist-price"><strong>¥{$v.pro_price}</strong> <span>¥{$v.price}</span></div>
+                <div class="prolist-yishou"><span>5.0折</span> <em>已售：{$v.solid_num}</em></div>
+            </dd>
+            <div class="clearfix"></div>
+        </dl>
+{/volist}
+    </div>
+    <!--prolist/-->
+{/block}
+
+{block name="script"}
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/style.js"></script>
+<!--焦点轮换-->
+<script src="/static/js/jquery.excoloSlider.js"></script>
+<script>
+    $(function () {
+        $("#sliderA").excoloSlider();
+    });
+    </script>
+{/block}

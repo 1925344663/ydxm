@@ -1,0 +1,151 @@
+{extend name="public/layerout"/}
+{block name="header"}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Author" contect="http://www.webqin.net">
+<title>商品详情</title>
+<link rel="shortcut icon" href="/static/images/favicon.ico"/>
+
+<!-- Bootstrap -->
+<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="/static/css/style.css" rel="stylesheet">
+<link href="/static/css/response.css" rel="stylesheet">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<style>
+    .jrgwc {
+        width: 150px;
+        height: 50px;
+        background-color: #ff6600;
+        /*text-align: center;*/
+        border-radius: 3px;
+    }
+
+    .jrgwc th {
+        padding-left: 15px;
+    }
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a href="javascript:history.back(-1)" class="back-off fl"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <div class="head-mid">
+        <h1>产品详情</h1>
+    </div>
+</header>
+<div id="sliderA" class="slider">
+    {volist name="goods" id="v" key="k" empty="相关参数丢失"}
+    <img src="__IMGURL__{$v.img_dir}580_{$v.image}"/>
+    {/volist}
+</div><!--sliderA/-->
+<form action="" method="post">
+
+    {volist name="goods" id="v" offset="1" length='1' empty="相关参数丢失"}
+       <input type="hidden" name="gid" value="{$id}">
+    <table class="jia-len">
+        <tr>
+            <th><strong class="orange">￥{$v.pro_price}</strong></th>
+
+            <td>
+                <input id="buy_num" name="buy_num" type="text" value="1" style="width: 34px" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>{$v.detail}</strong>
+                <p class="hui">上架时间: {:date('Y-m-d H:i:s',$v.add_time)}</p>
+            </td>
+            <td align="right">
+                <a href="javascript:;" class="shoucang"><span class="glyphicon glyphicon-star-empty"></span></a>
+            </td>
+        </tr>
+    </table>
+    {/volist}
+
+<div class="height2"></div>
+<h3 class="proTitle">商品规格</h3>
+<ul class="guige">
+    <li class="guigeCur"><a href="javascript:;">50ML</a></li>
+    <li><a href="javascript:;">100ML</a></li>
+    <li><a href="javascript:;">150ML</a></li>
+    <li><a href="javascript:;">200ML</a></li>
+    <li><a href="javascript:;">300ML</a></li>
+    <div class="clearfix"></div>
+</ul><!--guige/-->
+<div class="height2"></div>
+<div class="zhaieq">
+    <a href="javascript:;" class="zhaiCur">商品简介</a>
+    <a href="javascript:;">商品参数</a>
+    <a href="javascript:;" style="background:none;">订购列表</a>
+    <div class="clearfix"></div>
+</div><!--zhaieq/-->
+<div class="proinfoList">
+    <img src="/static/images/image4.jpg" width="636" height="822"/>
+</div><!--proinfoList/-->
+<div class="proinfoList">
+    暂无信息....
+</div><!--proinfoList/-->
+<div class="proinfoList">
+    暂无信息......
+</div><!--proinfoList/-->
+    <table class="jrgwc">
+        <tr>
+            <th>
+                <a href="index.html"><span class="glyphicon glyphicon-home"></span></a>
+            </th>
+            <td><a href="{:url('car')}" id="form-sub">加入购物车</a></td>
+        </tr>
+    </table>
+</form>
+{/block}
+{block name="main1"}{/block}
+{block name="script"}
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/js/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/style.js"></script>
+<script src="/static/js/layer/layer.js"></script>
+<!--焦点轮换-->
+<script src="/static/js/jquery.excoloSlider.js"></script>
+<script>
+    $(function () {
+        $("#sliderA").excoloSlider();
+    });
+</script>
+<!--jq加减-->
+<script src="/static/js/jquery.spinner.js"></script>
+<script>
+    $('.spinnerExample').spinner({});
+    $('#form-sub').click(function () {
+        _this = this;
+        if ($('#buy_num').val()>=1)
+        {
+            layer.msg('加入购物车成功',{icon:6,title:"提醒",time:500});
+
+            $.post($(this).attr('href'),$("input").serialize(),function (data) {
+                if (data.status === 'ok')
+                {
+                    location=$(_this).attr('href');
+                }else
+                {
+
+                }
+            })
+        }else
+        {
+            layer.msg('最少购买一件商品才能提交订单',{icon:5,title:"提醒",time:500});
+        }
+
+
+        return false;
+    })
+</script>
+
+{/block}
